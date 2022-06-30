@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps} from 'next'
 import Head from 'next/head'
 import Feed from '../components/Feed'
 import { getPosts } from '../utils/getPosts'
@@ -9,6 +9,8 @@ import Layout from '../components/layout'
 interface Props {
   posts:Post[]
 }
+
+
 
 const Home = ({posts}:Props) => {
   return (
