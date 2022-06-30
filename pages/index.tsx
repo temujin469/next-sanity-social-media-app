@@ -1,28 +1,30 @@
 import type { GetServerSideProps} from 'next'
 import Head from 'next/head'
 import Feed from '../components/Feed'
+import Sidebar from '../components/Sidebar'
+import Widget from '../components/Widget'
 import { getPosts } from '../utils/getPosts'
 import { Post } from '../typings'
 import { Toaster } from 'react-hot-toast'
-import Layout from '../components/layout'
 
 interface Props {
   posts:Post[]
 }
 
-
-
 const Home = ({posts}:Props) => {
   return (
-    <div className='bg-saaral mx-auto overflow-hidden max-h-screen'>
+    <div className='bg-saaral overflow-hidden max-h-screen'>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Toaster/>
-      <Layout>
+
+      <main className='grid grid-cols-11'>
+        <Sidebar/>
         <Feed posts={posts}/>
-      </Layout>
+        <Widget/>
+      </main>
     </div>
   )
 }
