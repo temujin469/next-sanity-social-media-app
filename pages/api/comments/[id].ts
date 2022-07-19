@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { NextApiResponse,NextApiRequest } from "next";
 import nc from "next-connect";
 import { groq } from "next-sanity";
@@ -30,16 +30,18 @@ handler.post(async (req, res) => {
 
   const apiEndpoint = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`;
 
-  await axios.post(
-    apiEndpoint,
-    { mutations },
-    {
+  const result = await fetch(
+    apiEndpoint,{
       headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_SANITY_API_TOKEN}`,
       },
+      body:JSON.stringify({mutations}),
+      method:"POST"
     }
   );
+
+  const json = await result.json();
 
   res.status(201).json({ message: "comment added" });
 });
