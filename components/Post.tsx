@@ -20,35 +20,35 @@ interface Props {
 
 function Post({ post }: Props) {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [input,setInput] = useState<string>('');
+  const [input, setInput] = useState<string>('');
   const [commentsBoxVisible, setcommentsBoxVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const { data: session } = useSession();
 
   const refereshComments = async () => {
-    const comments:any = await getComments(dispatch,post._id);
+    const comments: any = await getComments(dispatch, post._id);
     setComments(comments);
   };
   useEffect(() => {
     refereshComments();
   }, []);
 
-  const commentBody:CommentBody = {
-    text:input,
-    username:session?.user?.name || "Тодорхойгүй",
-    profileImage:session?.user?.image || "https://beomy.co.il/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png",
-    post:{
-      _ref:post._id,
-      _type:"reference"
+  const commentBody: CommentBody = {
+    text: input,
+    username: session?.user?.name || "Тодорхойгүй",
+    profileImage: session?.user?.image || "https://beomy.co.il/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png",
+    post: {
+      _ref: post._id,
+      _type: "reference"
     }
   };
 
   const createComment = async () => {
-    await addComment(dispatch,commentBody)
+    await addComment(dispatch, commentBody)
   }
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await createComment();
     await refereshComments()
@@ -70,9 +70,9 @@ function Post({ post }: Props) {
 
             <div>
               <div className="flex flex-col">
-                  <p className="mr-1 font-bold text-harBaraan">
-                    {post.username}
-                  </p>
+                <p className="mr-1 font-bold text-harBaraan">
+                  {post.username}
+                </p>
 
                 <TimeAgo
                   className="text-sm text-baraan"
@@ -104,7 +104,7 @@ function Post({ post }: Props) {
             className="w-5 h-5"
             onClick={() => setcommentsBoxVisible(!commentsBoxVisible)}
           />
-          <p>{comments.length}</p>
+          <p>{comments?.length}</p>
         </div>
         <div className="flex hover:bg-saaral hover:text-root p-1 rounded-lg cursor-pointer space-x-3 items-center text-gray-400">
           <SwitchHorizontalIcon className="w-5 h-5" />
@@ -133,7 +133,7 @@ function Post({ post }: Props) {
             className="rounded-lg outline-none flex-1 bg-saaral p-2"
             type="text"
             value={input}
-            onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setInput(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
             placeholder="write comment..."
           />
           {/* <button>submit</button> */}
@@ -143,7 +143,7 @@ function Post({ post }: Props) {
       {commentsBoxVisible && comments?.length > 0 && (
         <div className="my-5 pt-5 scrollbar-hide space-y-5 border-t px-5">
           {comments.map((comment) => (
-            <CommentComponent comment={comment} key={comment._id}/>
+            <CommentComponent comment={comment} key={comment._id} />
           ))}
         </div>
       )}

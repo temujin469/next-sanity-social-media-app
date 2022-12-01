@@ -25,6 +25,11 @@ const postQuery = groq`*[_type=="post"]{_id,...} | order(_createdAt desc)`;
 
 handler.get(async (req, res) => {
   const posts: Post[] = await sanityClient.fetch(postQuery);
+  if (posts) {
+    res
+      .status(400)
+      .json({ message: "aldaa garlaa postiig fetch hiij chadsangvi" });
+  }
   res.status(200).json({ posts, message: "success" });
 });
 

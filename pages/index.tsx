@@ -35,7 +35,6 @@ export default Home
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const posts = await getPosts();
-
   return {
     props: {
       posts,
