@@ -1,4 +1,4 @@
-import type { GetServerSideProps} from 'next'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Feed from '../components/Feed'
 import Sidebar from '../components/Sidebar'
@@ -8,22 +8,23 @@ import { Post } from '../typings'
 import { Toaster } from 'react-hot-toast'
 
 interface Props {
-  posts:Post[]
+  posts?: Post[]
 }
 
-const Home = ({posts}:Props) => {
+const Home = ({ posts }: Props) => {
+
   return (
     <div className='bg-saaral overflow-hidden max-h-screen'>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Toaster/>
+      <Toaster />
 
       <main className='grid grid-cols-11'>
-        <Sidebar/>
-        <Feed posts={posts}/>
-        <Widget/>
+        <Sidebar />
+        <Feed posts={posts} />
+        <Widget />
       </main>
     </div>
   )
@@ -31,12 +32,12 @@ const Home = ({posts}:Props) => {
 
 export default Home
 
-export const getServerSideProps:GetServerSideProps = async (context)=>{
-  
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
   const posts = await getPosts();
 
   return {
-    props:{
+    props: {
       posts,
     }
   }

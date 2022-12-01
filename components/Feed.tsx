@@ -8,18 +8,18 @@ import { getPosts } from "../redux/post/fetchPosts";
 import { useAppDispatch } from "../hooks";
 
 interface Props {
-  posts:Post[]
+  posts?: Post[]
 }
 
-function Feed({posts: postProp}:Props) {
-  const [posts,setPosts]= useState<Post[]>(postProp)
+function Feed({ posts: postProp }: Props) {
+  const [posts, setPosts] = useState<Post[] | undefined>(postProp)
   const dispatch = useAppDispatch()
 
-  const handleRefresh = async ()=>{
+  const handleRefresh = async () => {
     const refreshToast = toast.loading("дахин ачаалж байна...")
-    const fetchedPosts:Post[] |any= await getPosts(dispatch);
-    toast.success("нийтлэл шинэчлэгдсэн",{
-      id:refreshToast
+    const fetchedPosts: Post[] | undefined = await getPosts(dispatch);
+    toast.success("нийтлэл шинэчлэгдсэн", {
+      id: refreshToast
     })
 
     setPosts(fetchedPosts)
@@ -35,13 +35,13 @@ function Feed({posts: postProp}:Props) {
 
       {/*post box */}
       <div>
-      <PostBox setPosts={setPosts}/>
+        <PostBox setPosts={setPosts} />
       </div>
 
       {/* posts */}
       <div className="my-3 md:my-5 space-y-3 md:space-y-5">
-        {posts.map(post =>(
-          <PostComponent key={post._id} post={post}/>
+        {posts?.map((post: Post) => (
+          <PostComponent key={post._id} post={post} />
         ))}
       </div>
     </div>
